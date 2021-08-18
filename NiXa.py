@@ -310,7 +310,7 @@ try:
                 print(Fore.GREEN+"************************************************************************************".center(90," "))
         dictionay_format()
         
-        print(Fore.BLUE+"[                                                          REPORT: ]  ")
+        print(Fore.BLUE+"                                                          [REPORT: ]                                 ")
         if user_input==11:
             if valuable_bond:              #bond first priroty
                 print("".center(120,"*"))
