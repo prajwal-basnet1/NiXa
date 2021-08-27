@@ -23,7 +23,7 @@ try:
         
         print((Fore.MAGENTA+figlet_format("NiXa",font="caligraphy")))
         #printing all the sectors on screen for user input.
-        print(Fore.MAGENTA+Style.BRIGHT+"                    {------------------{+} Coded by Anonymous {+}---------------}")
+        print(Fore.MAGENTA+Style.BRIGHT+"                    {------------------{+} Coded by anonymous {+}---------------}")
         print("                   {------------------{+} With Great Power Comes Great Responsibility. {+}--------------}")
         print()
         print()
@@ -238,9 +238,11 @@ try:
             intrinsic_value=[]
             for i in range(len(eps_list)):
                 eps_for_intrinsic=eps_list[i].split("(")[0]
+                book_values=book_value[i].replace(",","")
                 try:
-                    intrinsic=round(math.sqrt(22.5*math.ceil(float(eps_for_intrinsic))*math.ceil(float(book_value[i]))),2)
+                    intrinsic=round(math.sqrt(22.5*math.ceil(float(eps_for_intrinsic))*math.ceil(float(book_values))),2)
                 except ValueError :
+                    #print(round(math.sqrt(22.5*math.ceil(float(eps_for_intrinsic))*math.ceil(float(book_value[i]))),2))
                     intrinsic="0 (Negative number)"
                 intrinsic_value.append(intrinsic) 
 
