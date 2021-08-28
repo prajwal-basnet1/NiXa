@@ -60,6 +60,7 @@ try:
         ticker_bs4=BeautifulSoup(tickerhtml,"lxml")
         tickertable=ticker_bs4.find('table')       #finding the table from nepse website
 
+
         whole_list=[]
         for i in tickertable.findAll("td"):           #getting the table data from nepse website.
             tickervalue=i.get_text(strip=True)
@@ -91,14 +92,90 @@ try:
             print("[-] Error:"+str(f))
 
         try:
-            bs4obj=BeautifulSoup(htmlfile,"lxml")
+            bs4obj=BeautifulSoup(htmlfile,"html.parser")
             table=bs4obj.find('table',{"id":"accordion"})
 
             with open(filenames,'a') as k:          #opening the testfile 
                 k.write('Company name: '+"\n")        #writing the company name on first.
                 k.write(com_name+"\n")
 
-            #filtering the table and from that only selecting the necessary value.
+            #filtering the able and from that only selecting the necessary value.
+            
+            def getting_cash():
+                temp_lists_fiscal=[]
+                cash_table=bs4obj.find(id="dividend-panel")
+                for i in cash_table.findAll("td"):
+                    temp_value=i.get_text(strip=True)
+                    if temp_value.startswith("#Fiscal"):
+                        pass
+                    else:
+                        temp_lists_fiscal.append(temp_value)
+                if len(temp_lists_fiscal)==0:
+                    cash_dividend="No cashdividend yet!!"
+                else:
+                    temp_cash_dividend=temp_lists_fiscal[1::3]
+                    year=temp_lists_fiscal[2::3]
+                    
+                    cash_dividend=[i+"  "+j for i,j in zip(temp_cash_dividend,year)]
+                return cash_dividend
+            cash_dividend_var=getting_cash()
+            if type(cash_dividend_var)==str:
+                cash_dividend=cash_dividend_var
+            else:
+                cash_dividend=""
+                for i in cash_dividend_var:
+                    cash_dividend=cash_dividend+i+" , "
+                
+            
+            def getting_bonus():
+                temp_lists_fiscal=[]
+                bonus_table=bs4obj.find(id="bonus-panel")
+                for i in bonus_table.findAll("td"):
+                    temp_value=i.get_text(strip=True)
+                    if temp_value.startswith("#Value"):
+                        pass
+                    else:
+                        temp_lists_fiscal.append(temp_value)
+                if len(temp_lists_fiscal)==0:
+                    bonus_share="No bonus dividend yet!!"
+                else:
+                    temp_bonus_share=temp_lists_fiscal[1::3]
+                    year=temp_lists_fiscal[2::3]
+                    
+                    bonus_share=[i+"  "+j for i,j in zip(temp_bonus_share,year)]    
+                return bonus_share
+            bonus_share_var=getting_bonus()
+            if type(bonus_share_var)==str:
+                bonus_share=bonus_share_var
+            else:
+                bonus_share=""
+                for i in bonus_share_var:
+                    bonus_share=bonus_share+i+" , "
+
+            def getting_rightshare():
+                temp_lists_fiscal=[]
+                right_table=bs4obj.find(id="right-panel")
+                for i in right_table.findAll("td"):
+                    temp_value=i.get_text(strip=True)
+                    if temp_value.startswith("#ValueFiscal"):
+                        pass
+                    else:
+                        temp_lists_fiscal.append(temp_value)
+                if len(temp_lists_fiscal)==0:
+                    right_share="No right share yet!!"
+                else:
+                    temp_right_share=temp_lists_fiscal[1::3]
+                    year=temp_lists_fiscal[2::3]
+                    
+                    right_share=[i+"  "+j for i,j in zip(temp_right_share,year)]
+                return right_share    
+            right_share_var=getting_rightshare()
+            if type(right_share_var)==str:
+                right_share=right_share_var;
+            else:
+                right_share=""
+                for i in right_share_var:
+                    right_share=right_share+i+" , "
 
             for i in table.findAll({"th","td"}):
                 value=i.get_text(strip=True)
@@ -107,7 +184,12 @@ try:
                 else:
                     with open(filenames,'a') as f:
                         f.write(value+"\n")
+            #writing cash dividend,bonus share,right share at the end of trash file.
 
+            with open(filenames,'a') as k:
+                k.write("Cash Dividend= "+str(cash_dividend)+"\n")
+                k.write("Bonus Share= "+str(bonus_share)+"\n")
+                k.write("Right Share= "+str(right_share)+"\n")
         except Exception as e:
             print("Error [-]: "+str(e))
 
@@ -157,6 +239,9 @@ try:
         book_value=[]
         year_high_low_price=[]
         today_change=[]
+        cash_dividend_list=[]
+        bonus_share_list=[]
+        right_share_list=[]
         
         if all_sector is not None:
             filenames="testfile_"+real_names[all_sector]
@@ -175,48 +260,57 @@ try:
                 #if content[m].strip()=="P/E Ratio":
                 #    pe_list.append(content[m+1].strip("\n"))
 
-                if content[m].strip()=="Shares Outstanding":
+                elif content[m].strip()=="Shares Outstanding":
                     share_outstanding.append(content[m+1].strip("\n"))
                 
-                if content[m].strip()=="EPS":
+                elif content[m].strip()=="EPS":
                     if (content[m+1].strip("\n"))=="":
                         eps_list.append("0")
                     else:
                         eps_list.append(content[m+1].strip("\n"))
                 
-                if content[m].strip()=="Market Price":
+                elif content[m].strip()=="Market Price":
                     if (content[m+1].strip("\n")==""):
                         market_price.append("0")
                     else:
                         market_price.append(content[m+1].strip("\n"))
                 
-                if content[m].strip()=="PBV":
+                elif content[m].strip()=="PBV":
                     pb_value.append(content[m+1].strip("\n"))
                 
-                if content[m].strip()=="180 Day Average":
+                elif content[m].strip()=="180 Day Average":
                     average_180.append(content[m+1].strip("\n"))
                 
-                if content[m].strip()=="Book Value":
+                elif content[m].strip()=="Book Value":
                     if content[m+1].strip("\n")=="":
                         book_value.append("0")
                     else:
                         book_value.append(content[m+1].strip("\n"))
                 
                 
-                if content[m].strip()=="Last Traded On":
+                elif content[m].strip()=="Last Traded On":
                     Last_trade.append(content[m+1].strip("\n"))
                 
-                if content[m].strip()=="52 Weeks High - Low":
+                elif content[m].strip()=="52 Weeks High - Low":
                     year_high_low_price.append(content[m+1].strip("\n"))
                 
                 
-                if content[m].strip()=="% Change":
+                elif content[m].strip()=="% Change":
                     today_change.append(content[m+1].strip("\n"))
-
-                    
+                elif content[m].strip().startswith("Cash Dividend="):
+                    cash_content=(content[m].strip("\n")).split("=")
+                    cash_dividend_list.append(cash_content[1])
+                 
+                elif content[m].strip().startswith("Bonus Share="):
+                    bonus_content=(content[m].strip("\n").split("="))
+                    bonus_share_list.append(bonus_content[1])
+                
+                elif content[m].strip().startswith("Right Share="):
+                    right_content=(content[m].strip("\n").split("="))
+                    right_share_list.append(right_content[1])
+                else:
+                    pass
                 m+=1
-
-
         def getting_real_pe(eps,market_price):
             
             for i in range(len(market_price)):
@@ -296,6 +390,9 @@ try:
                 dict_value[m]["Market Price"]=market_price[i]
                 dict_value[m]["Intrinsic Value"]=intrinsic_value[i]
                 dict_value[m]["Price to Intrinisc"]=price_to_intinsic[i]
+                dict_value[m]["Cash Dividend"]=cash_dividend_list[i]
+                dict_value[m]["Bonus Share"]=bonus_share_list[i]
+                dict_value[m]["Right Share"]=right_share_list[i]
                 m+=1
             print()
             temp="Company Id"
@@ -370,6 +467,9 @@ try:
                 l.write("Market price : "+str(market_price[j])+"\n")
                 l.write("Intrinsic value : "+str(intrinsic_value[i])+"\n")
                 l.write("Price to Intrinsic : "+str(price_to_intinsic[i])+"\n")
+                l.write("Cash Dividend : "+str(cash_dividend_list[i])+"\n")
+                l.write("Bonus Share : "+str(bonus_share_list[i])+"\n")
+                l.write("Right Share : "+str(right_share_list[i])+"\n")
                 l.write("***********************************************************************"+"\n")
                 j+=1
 
@@ -400,5 +500,6 @@ try:
     program_sequnce()
 except Exception as e:
     print(traceback.format_exc())
-    print("")
+    print(e)
     print("Ugh!!!Something went wrong!")
+t
