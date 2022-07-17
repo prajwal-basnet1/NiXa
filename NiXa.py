@@ -19,11 +19,14 @@ try:
         global sectors;
         global all_sector;
         global user_input;
+        global listed_companies;
+        global all_sector;
+        global user_input;
         all_sector=None;
         
         print((Fore.MAGENTA+figlet_format("NiXa",font="caligraphy")))
         #printing all the sectors on screen for user input.
-        print(Fore.MAGENTA+Style.BRIGHT+"                    {------------------{+} Coded by anonymous {+}---------------}")
+        print(Fore.MAGENTA+Style.BRIGHT+"                    {------------------{+} Coded by Little Brave Stainee{+}---------------}")
         print("                   {------------------{+} With Great Power Comes Great Responsibility. {+}--------------}")
         print()
         print()
@@ -76,7 +79,6 @@ try:
         if not(ticker_list):
             print(Fore.RED+"None of the company listed in this sector.")
             exit()
-    #print(len(ticker_list))
 
     #creating the name for testfile.
     #***********************************************ticker selected*********************************************************
@@ -399,7 +401,7 @@ try:
             if all_sector is not None:
                 print(Fore.GREEN+f"*******************************{(names[all_sector]).upper()}**************************************".center(90," "))
             else:
-                print(Fore.GREEN+f"*******************************{(sectors[names[user_input-1]]).upper()}**************************************".center(90," "))
+                print(Fore.GREEN+f"*********************************************************************".center(90," "))
             for i,j in dict_value.items():
                 
                 print(f"{temp:>50s} : "+str(i) )
@@ -409,7 +411,7 @@ try:
                 print(Fore.GREEN+"************************************************************************************".center(90," "))
         dictionay_format()
         
-        print(Fore.BLUE+"                                                          [REPORT: ]                                 ")
+        print(Fore.BLUE+"                                                          [ REPORT: ]                                 ")
         if user_input==11:
             if valuable_bond:              #bond first priroty
                 print("".center(120,"*"))
@@ -465,8 +467,8 @@ try:
                 l.write("Book Value : "+str(book_value[j])+"\n")
                 l.write("Price to book value : "+str(pb_value[j])+"\n")
                 l.write("Market price : "+str(market_price[j])+"\n")
-                l.write("Intrinsic value : "+str(intrinsic_value[i])+"\n")
-                l.write("Price to Intrinsic : "+str(price_to_intinsic[i])+"\n")
+                l.write("Graham number : "+str(intrinsic_value[i])+"\n")
+                l.write("Price to Graham number : "+str(price_to_intinsic[i])+"\n")
                 l.write("Cash Dividend : "+str(cash_dividend_list[i])+"\n")
                 l.write("Bonus Share : "+str(bonus_share_list[i])+"\n")
                 l.write("Right Share : "+str(right_share_list[i])+"\n")
@@ -474,10 +476,18 @@ try:
                 j+=1
 
     def program_sequnce():        
+
         getting_sector()
         if user_input<17:
+            global listed_companies;
+            global ticker_list
             ticker_link=f"http://nepalstock.com/company/index/1/stock-symbol/asc/YTo0OntzOjEwOiJzdG9jay1uYW1lIjtzOjA6IiI7czoxMjoic3RvY2stc3ltYm9sIjtzOjA6IiI7czo5OiJzZWN0b3ItaWQiO3M6MToiOCI7czo2OiJfbGltaXQiO3M6MzoiMzAwIjt9?stock-name=&stock-symbol=&sector-id={sectors[names[user_input-1]]}&_limit=300%22"
-            get_ticker(ticker_link);
+            try:
+                get_ticker(ticker_link);
+            except:
+                listed_companies={1:['ADBL', 'BOKL', 'CBL', 'CCBL', 'CZBIL', 'EBL', 'GBIME', 'HBL', 'JBNL', 'KBL', 'LBL', 'MBL', 'MEGA', 'NABIL', 'NBB', 'NBL', 'NCCB', 'NIB', 'NICA', 'NMB', 'PCBL', 'PRVU', 'SANIMA', 'SBI', 'SBL', 'SCB', 'SRBL'],2:['BFC', 'CEFL', 'CFCL', 'CFL', 'CMB', 'GFCL', 'GMFIL', 'GUFL', 'HATH', 'HFL', 'ICFC', 'JFL', 'LFC', 'MFIL', 'MPFL', 'NFS', 'NSM', 'PFL', 'PROFL', 'RLFL', 'SFC', 'SFCL', 'SFFIL', 'SIFC', 'SYFL', 'UFL'],3:['CGH', 'OHL', 'SHL', 'TRH', 'YHL'],4:['AVU', 'BNL', 'BNT', 'BSL', 'BSM', 'FHL', 'GRU', 'HBT', 'HDL', 'JSM', 'NBBU', 'NKU', 'NLO', 'NVG', 'RJM', 'SBPP', 'SHIVM', 'SRS', 'UNL'],5:['NFD', 'NRIC', 'NTC'],6:['AHPC', 'AKJCL', 'AKPL', 'API', 'BARUN', 'BHL', 'BNHC', 'BPCL', 'CHCL', 'CHL', 'DHPL', 'DORDI', 'GHL', 'GLH', 'GVL', 'HDHPC', 'HPPL', 'HURJA', 'JOSHI', 'KKHC', 'KPCL', 'LEC', 'MBJC', 'MEN', 'MHNL', 'MKJC', 'NGPL', 'NHDL', 'NHPC', 'NYADI', 'PMHPL', 'PPCL', 'RADHI', 'RFPL', 'RHPC', 'RHPL', 'RRHP', 'RURU', 'SAHAS', 'SHEL', 'SHPC', 'SJCL', 'SPC', 'SPDL', 'SSHL', 'TPC', 'UMHL', 'UMRH', 'UNHPL', 'UPCL', 'UPPER'],7:['BBC', 'NTL', 'NWC', 'STC'],8:['AIL', 'EIC', 'GIC', 'HGI', 'IGI', 'LGIL', 'NICL', 'NIL', 'NLG', 'PIC', 'PICL', 'PRIN', 'RBCL', 'SGI', 'SIC', 'SICL', 'SIL', 'UIC'],9:['BHBL', 'CORBL', 'EDBL', 'GBBL', 'GDBL', 'GRDBL', 'HAMRO', 'JBBL', 'KNBL', 'KRBL', 'KSBBL', 'LBBL', 'MDB', 'MLBL', 'MNBBL', 'NABBC', 'NIDC', 'ODBL', 'SADBL', 'SAPDBL', 'SBBLJ', 'SHBL', 'SHINE', 'SINDU', 'TMDBL'],10:[],11:['ADBLB', 'ADBLB86', 'ADBLB87', 'ADBLD83', 'BOKD2079', 'BOKD86', 'CCBD88', 'CIZBD86', 'GBBD85', 'GBD80/81', 'GBILD86/87', 'GWFD83', 'HBLD83', 'ICFCD83', 'JBBD87', 'KBLD86', 'KSBBLD87', 'LBLD86', 'LBLD88', 'MBLD2085', 'MBLD87', 'MFLD85', 'MND84/85', 'NBBD2085', 'NBLD82', 'NBLD85', 'NBLD87', 'NCCD86', 'NIBD2082', 'NIBD84', 'NICAD 85/86', 'NICAD8182', 'NICAD8283', 'NICD83/84', 'NICD88', 'NMBD2085', 'NMBD87/88', 'NMBEB92/93', 'PBD85', 'PBLD84', 'PBLD86', 'PBLD87', 'RBBD83', 'SAND2085', 'SBD87', 'SBIBD86', 'SBLD2082', 'SBLD83', 'SBLD84', 'SDBD87', 'SRBLD83', 'SRD80'],12:['EBLCP'],13:['CMF1', 'CMF2', 'GIMES1', 'KEF', 'LEMF', 'LUK', 'MMF1', 'NBF2', 'NBF3', 'NEF', 'NIBLPF', 'NIBSF2', 'NICBF', 'NICGF', 'NICSF', 'NMB 50', 'NMB50', 'NMBHF1', 'PSF', 'RMF1', 'SAEF', 'SBCF', 'SEF', 'SEOS', 'SFMF', 'SIGS2', 'SLCF'],14:['ACLBSL', 'AKBSL', 'ALBSL', 'AMFI', 'CBBL', 'CLBSL', 'CYCL', 'DDBL', 'FMDBL', 'FOWAD', 'GBLBS', 'GGBSL', 'GILB', 'GLBSL', 'GMFBS', 'ILBS', 'JALPA', 'JBLB', 'JSLBB', 'KLBSL', 'KMCDB', 'LLBS', 'MERO', 'MKLB', 'MLBBL', 'MLBS', 'MLBSL', 'MMFDB', 'MSLB', 'MSMBS', 'NADEP', 'NAGRO', 'NESDO', 'NICLBSL', 'NLBBL', 'NMBMF', 'NMFBS', 'NSLB', 'NUBL', 'RMDC', 'RSDC', 'RULB', 'SABSL', 'SAMAJ', 'SDESI', 'SDLBSL', 'SKBBL', 'SLBBL', 'SLBS', 'SLBSL', 'SMATA', 'SMB', 'SMFBS', 'SMFDB', 'SPARS', 'SWBBL', 'SWMF', 'ULBSL', 'USLB', 'VLBS', 'WNLB'],15:['ALICL', 'GLICL', 'JLI', 'LICN', 'NLIC', 'NLICL', 'PLI', 'PLIC', 'RLI', 'SLI', 'SLICL', 'ULI'],16:['CHDC', 'CIT', 'ENL', 'HIDCL', 'NIFRA', 'NRN']}
+                ticker_list=listed_companies[user_input]
+
             calling_websraping()
             retrive_value()
         elif user_input==17:
@@ -502,4 +512,3 @@ except Exception as e:
     print(traceback.format_exc())
     print(e)
     print("Ugh!!!Something went wrong!")
-
