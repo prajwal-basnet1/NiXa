@@ -232,6 +232,7 @@ try:
     def retrive_value():
         company_name=[]
         pe_list=[]
+        market_capitalization=[]
         eps_list=[]
         market_price=[]
         pb_value=[]
@@ -313,6 +314,20 @@ try:
                 else:
                     pass
                 m+=1
+        def getting_marketcap(marketprice,shareoutstanding):
+                for i in range(len(shareoutstanding)):
+                    if(shareoutstanding[i]==""):
+                        market_capitalization.append(0)
+                    else:
+                        temp_shareoutstanding=round(float((shareoutstanding[i][:-3]).replace(",","")),2)
+                        temp_marketprice=round(float(marketprice[i].replace(",","")),2)
+
+                        temp_marketcap=round(float(temp_marketprice)*float(temp_shareoutstanding),2)
+                        temp_marketcap="{:,}".format(temp_marketcap)
+                        market_capitalization.append(temp_marketcap)
+
+        getting_marketcap(market_price,share_outstanding)
+
         def getting_real_pe(eps,market_price):
             
             for i in range(len(market_price)):
@@ -381,17 +396,18 @@ try:
                 dict_value[m]={}
                 dict_value[m]["Company name"]=company_name[i]
                 dict_value[m]["Shares Outstanding"]=share_outstanding[i]
+                dict_value[m]["Market Price"]=market_price[i]
+                dict_value[m]["Market Capitalization"]=market_capitalization[i]
+                dict_value[m]["Graham number"]=intrinsic_value[i]
+                dict_value[m]["Price to Graham number"]=price_to_intinsic[i]
+                dict_value[m]["EPS"]=eps_list[i]
+                dict_value[m]["P/E Ratio"]=pe_list[i]
+                dict_value[m]["Book Value"]=book_value[i]
+                dict_value[m]["PBV"]=pb_value[i]
                 dict_value[m]["180 Day Average"]=average_180[i]
                 dict_value[m]["Last Traded On"]=Last_trade[i]
                 dict_value[m]["52 Weeks High - Low"]=year_high_low_price[i]
                 dict_value[m]["%Change"]=today_change[i]
-                dict_value[m]["EPS"]=eps_list[i]
-                dict_value[m]["P/E Ratio"]=pe_list[i]
-                dict_value[m]["PBV"]=pb_value[i]
-                dict_value[m]["Book Value"]=book_value[i]
-                dict_value[m]["Market Price"]=market_price[i]
-                dict_value[m]["Intrinsic Value"]=intrinsic_value[i]
-                dict_value[m]["Price to Intrinisc"]=price_to_intinsic[i]
                 dict_value[m]["Cash Dividend"]=cash_dividend_list[i]
                 dict_value[m]["Bonus Share"]=bonus_share_list[i]
                 dict_value[m]["Right Share"]=right_share_list[i]
@@ -458,17 +474,18 @@ try:
             for i in range(len(company_name)):
                 l.write("Company Name : "+str(company_name[j])+"\n")
                 l.write("Share outstanding : "+str(share_outstanding[j])+"\n")
-                l.write("average 180 : "+str(average_180[j])+"\n")
-                l.write("'%' change : "+str(today_change[j])+"\n")
-                l.write("Last Traded On : "+str(Last_trade[j])+"\n")
-                l.write("52 weeks high-low : "+str(year_high_low_price[j])+"\n")
+                l.write("Market price : "+str(market_price[j])+"\n")
+                l.write("Market Capitalization : "+str(market_capitalization[j])+"\n")
                 l.write("Eps : "+str(eps_list[j])+"\n")
                 l.write("PE Ratio : "+str(pe_list[j])+"\n")
                 l.write("Book Value : "+str(book_value[j])+"\n")
                 l.write("Price to book value : "+str(pb_value[j])+"\n")
-                l.write("Market price : "+str(market_price[j])+"\n")
                 l.write("Graham number : "+str(intrinsic_value[i])+"\n")
                 l.write("Price to Graham number : "+str(price_to_intinsic[i])+"\n")
+                l.write("Last Traded On : "+str(Last_trade[j])+"\n")
+                l.write("'%' change : "+str(today_change[j])+"\n")
+                l.write("average 180 : "+str(average_180[j])+"\n")
+                l.write("52 weeks high-low : "+str(year_high_low_price[j])+"\n")
                 l.write("Cash Dividend : "+str(cash_dividend_list[i])+"\n")
                 l.write("Bonus Share : "+str(bonus_share_list[i])+"\n")
                 l.write("Right Share : "+str(right_share_list[i])+"\n")
