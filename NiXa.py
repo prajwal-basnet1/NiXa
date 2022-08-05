@@ -408,6 +408,16 @@ try:
                 dict_value[m]["Last Traded On"]=Last_trade[i]
                 dict_value[m]["52 Weeks High - Low"]=year_high_low_price[i]
                 dict_value[m]["%Change"]=today_change[i]
+<<<<<<< HEAD
+=======
+                dict_value[m]["EPS"]=eps_list[i]
+                dict_value[m]["P/E Ratio"]=pe_list[i]
+                dict_value[m]["PBV"]=pb_value[i]
+                dict_value[m]["Book Value"]=book_value[i]
+                dict_value[m]["Market Price"]=market_price[i]
+                dict_value[m]["Graham number"]=intrinsic_value[i]
+                dict_value[m]["Price to Graham number"]=price_to_intinsic[i]
+>>>>>>> e1038cb0461cab05a3f06a5736776ca603265dbe
                 dict_value[m]["Cash Dividend"]=cash_dividend_list[i]
                 dict_value[m]["Bonus Share"]=bonus_share_list[i]
                 dict_value[m]["Right Share"]=right_share_list[i]
