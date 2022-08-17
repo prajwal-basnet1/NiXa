@@ -12,7 +12,7 @@ it can find the almost all market status without going to the market website.
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/prajwal-basnet1/NiXa"><img src="./images/nixawallpaper.jpg" alt="NiXa"></a>
+  <a href="https://github.com/prajwal-basnet1/NiXa"><img src="./images/Nixawallpaper.jpg" alt="NiXa"></a>
   <br>
   NiXa
   <br>
