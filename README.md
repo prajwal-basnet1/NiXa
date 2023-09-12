@@ -8,17 +8,21 @@ it can find the almost all market status without going to the market website.
 - can find all the bonds less than 1000.
 - can find market status.
 
-## ScreenShots
+## Sample
 
 <h1 align="center">
   <br>
   <a href="https://github.com/prajwal-basnet1/NiXa">
     
 
-https://github.com/prajwal-basnet1/NiXa/assets/89059052/09e76f39-4430-4688-baa7-a5cff3fdd1a9
 
 
-    <!--<img src="./images/Nixawallpaper.png" alt="NiXa"></a>-->
+
+https://github.com/prajwal-basnet1/NiXa/assets/89059052/d0d3e5cb-11c9-449b-9960-1eed1de311c3
+
+
+
+    
   <br>
   NiXa
   <br>
